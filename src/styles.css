@@ -1,0 +1,27 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700; /* This sets the font weight to bold */
+    padding: 1rem;
+    border-bottom: 1px solid black;
+}
+
+.task-item {
+    border: 1px solid black;
+    display: block;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.wrapper {
+    display: none;
+}
