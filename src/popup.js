@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-function popUp(content) {
+function popUpx(content) {
     //=======PopUp===========
     const popUp = document.createElement("div");
     popUp.classList.add("popUp");
@@ -25,16 +25,29 @@ function popUp(content) {
     divDescription.appendChild(inputDescription);
     form.appendChild(divDescription);
     //======Date========
-    const divDate = document.createElement("div");
-    divDate.classList.add("date");
-    const date = format(new Date(), "MMMM do yyyy");
-    divDate.textContent = date;
-    form.appendChild(divDate);
+    // const divDate = document.createElement("div");
+    // divDate.classList.add("date");
+    // const date = format(new Date(), "MMMM do yyyy");
+    // divDate.textContent = `Today's date: ${date}`;
+    // form.appendChild(divDate);
+    const dueDate = document.createElement("div");
+    dueDate.classList.add("dueDate");
+    const formDate = document.createElement("form");
+    const labelDate = document.createElement("label");
+    labelDate.textContent = "Due date:";
+    formDate.appendChild(labelDate);
+    const inputDate = document.createElement("input");
+    inputDate.setAttribute("type", "date");
+    inputDate.setAttribute("name", "due");
+    formDate.appendChild(inputDate);
+    dueDate.appendChild(formDate);
+    form.appendChild(dueDate);
     //=====Checkmarks========
     //legend
+    const fieldset = document.createElement("fieldset");
     const legend = document.createElement("legend");
     legend.textContent = "Priority:";
-    form.appendChild(legend);
+    fieldset.appendChild(legend);
     //high prio
     const div = document.createElement("div");
     div.classList.add("divHigh");
@@ -47,7 +60,7 @@ function popUp(content) {
     labelPriority1.setAttribute("for", "high");
     labelPriority1.textContent = "High";
     div.appendChild(labelPriority1);
-    form.appendChild(div);
+    fieldset.appendChild(div);
     //medium prio
     const div2 = document.createElement("div");
     div2.classList.add("divMedium");
@@ -60,7 +73,7 @@ function popUp(content) {
     labelPriority2.setAttribute("for", "medium");
     labelPriority2.textContent = "Medium";
     div2.appendChild(labelPriority2);
-    form.appendChild(div2);
+    fieldset.appendChild(div2);
     //low prio
     const div3 = document.createElement("div");
     div3.classList.add("divLow");
@@ -73,7 +86,8 @@ function popUp(content) {
     labelPriority3.setAttribute("for", "low");
     labelPriority3.textContent = "Low";
     div3.appendChild(labelPriority3);
-    form.appendChild(div3);
+    fieldset.appendChild(div3)
+    form.appendChild(fieldset);
     //============Buttons=========
     const div4 = document.createElement("div");
     div4.classList.add("divButton");
@@ -102,10 +116,13 @@ function popUp(content) {
     inputPriority2,
     inputPriority3,
     create,
-    divDate,
+    dueDate,
+    inputDate,
+    close,
+    popUp,
   };
 };
 
   export {
-    popUp
+    popUpx
   }

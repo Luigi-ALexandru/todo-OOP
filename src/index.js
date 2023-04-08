@@ -1,5 +1,5 @@
 import './styles.css';
-import { popUp } from './popup.js'
+import { popUpx } from './popup.js'
 import { createTask } from './createTask.js';
 //declare class
 class Todo {
@@ -16,8 +16,25 @@ class Todo {
     this.addTask();
   }
 
-  popUpTask() {
-    //callback function
+  expandTask(note, wrapper) {
+      note.addEventListener("click", function(){
+      note.style.position = "fixed";
+      note.style.top = "50%";
+      note.style.left = "50%";
+      note.style.transform = "translate(-50%, -50%)";
+      wrapper.style.display = "flex";
+      wrapper.style.flexDirection = "column";
+      function closeZoomedTask(event) {
+        if(event.target !== note) {
+          note.style.position = "";
+          note.style.top = "";
+          note.style.left = "";
+          note.style.transform = "";
+          wrapper.style.display = "none";
+        }
+      }
+      window.addEventListener("click", closeZoomedTask);
+  })
   }
 
   addTask() {
@@ -35,9 +52,6 @@ const content = document.querySelector(".content");
 //button add to array
 const addTaskBtn = document.querySelector(".addTaskBtn");
 addTaskBtn.addEventListener("click", function(){
-  const { inputSubject, inputDescription, inputPriority, inputPriority2, inputPriority3, create, divDate } = popUp(content);
-  createTask(inputSubject, inputDescription, inputPriority, inputPriority2, inputPriority3, Todo, content, create, divDate)
+  const { inputSubject, inputDescription, inputPriority, inputPriority2, inputPriority3, create, dueDate, close, popUp, inputDate } = popUpx(content);
+  createTask(inputSubject, inputDescription, inputPriority, inputPriority2, inputPriority3, Todo, content, create, dueDate, close, popUp, inputDate)
 });
-
-
-

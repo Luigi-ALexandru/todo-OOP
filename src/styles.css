@@ -8,18 +8,116 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700; /* This sets the font weight to bold */
     padding: 1rem;
     border-bottom: 1px solid black;
 }
 
+.menu-icon {
+    padding: 1rem;
+    transition: 0.3s;
+    position: relative;
+    display: inline-block;
+}
+
+.menu-icon:hover {
+    transform: rotate(180deg);
+}
+
+.dropdown {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    margin-left: 0.5rem;
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.addTaskBtn,
+.deleteTaskBtn {
+    font-family: 'Roboto', sans-serif;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 0.3rem;
+    margin: 0.5rem;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.addTaskBtn:hover,
+.deleteTaskBtn:hover {
+    transform: scale(110%);
+}
+
+.content {
+    margin-left: 10rem;
+}
+
 .task-item {
     border: 1px solid black;
-    display: block;
+    display: inline-block;
     margin: 1rem;
     padding: 1rem;
+}
+
+.task-item:hover {
+    transform: scale(110%);
+    cursor: pointer;
+}
+
+.popUp {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    padding: 1rem;
+}
+
+input[type="text"] {
+    border: 1px solid black;
+    margin: 1rem;
+    padding: 0.3rem;
+}
+
+input {
+    border: 1px solid black;
+    margin: 0 1rem 0 1rem;
+}
+
+textarea {
+    border: 1px solid black;
+    padding: 0.3rem;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.dueDate {
+    margin: 0 1rem 1rem 1rem;
+}
+
+legend {
+    margin: 0 1rem 1rem 0.5rem;
+    background-color: #000;
+    color: #fff;
+    display: inline-block;
+}
+
+.divLow {
+    margin-bottom: 1rem;
+}
+
+.divButton {
+    margin: 1rem 1rem 1rem 1rem;
 }
 
 .wrapper {
