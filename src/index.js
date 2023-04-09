@@ -41,8 +41,20 @@ class Todo {
     Todo.tasks.push(this);
   }
 
-  deleteTask() {
-    //code here
+  delBtn(wrapper, ID) {
+    const delBtn = document.createElement("button");
+    delBtn.classList.add("delBtn");
+    delBtn.textContent = "Delete";
+    wrapper.appendChild(delBtn);
+
+    delBtn.addEventListener("click", function(){
+      for(let i = 0; i < Todo.tasks.length; i++) {
+        if(Todo.tasks[i].taskID === ID) {
+          Todo.tasks.splice(Todo.tasks.indexOf(Todo.tasks[i].taskID), 1);
+        }
+      }
+      console.log(Todo.tasks.length);
+    })
   }
 }
 
