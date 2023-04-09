@@ -1,6 +1,7 @@
-let taskOne = null;
+export let taskOne = null;
 function createTask(inputSubject, inputDescription, inputPriority, inputPriority2, inputPriority3, Todo, content, create, dueDate, close, popUp, inputDate) {
   create.addEventListener("click", function(){
+    console.log(Todo.tasks.length);
       const title = inputSubject.value;
       const description = inputDescription.value;
       const date = dueDate.textContent + " " + inputDate.value;
@@ -58,12 +59,12 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
           const ID = document.createElement("div");
           ID.textContent = Todo.tasks[i].taskID;
           wrapper.appendChild(ID);
-          Todo.tasks[i].delBtn(wrapper);
+          Todo.tasks[i].delBtn(wrapper, ID, inputSubject);
           note.appendChild(wrapper);
           taskOne.expandTask(note, wrapper);
           content.appendChild(note);
       }
-      popUp.remove();
+      popUp.style.display = "none";
   })
 
   close.addEventListener("click", function() {
@@ -111,15 +112,17 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
           const ID = document.createElement("div");
           ID.textContent = Todo.tasks[i].taskID;
           wrapper.appendChild(ID);
-          Todo.tasks[i].delBtn(wrapper);
+          Todo.tasks[i].delBtn(wrapper, ID, inputSubject);
           note.appendChild(wrapper);
           taskOne.expandTask(note, wrapper);
           content.appendChild(note);
       }
     }
-    popUp.remove();
+    popUp.style.display = "none";
   })
 }
+
+
 
 export {
   createTask

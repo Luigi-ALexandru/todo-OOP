@@ -1,6 +1,7 @@
 import './styles.css';
 import { popUpx } from './popup.js'
-import { createTask } from './createTask.js';
+import { createTask, taskOne } from './createTask.js';
+
 //declare class
 class Todo {
 
@@ -41,21 +42,70 @@ class Todo {
     Todo.tasks.push(this);
   }
 
-  delBtn(wrapper, ID) {
+  delBtn(wrapper, ID, inputSubject) {
+    if(Todo.tasks.length === 0) {
+      content.textContent = "";
+    }
     const delBtn = document.createElement("button");
     delBtn.classList.add("delBtn");
     delBtn.textContent = "Delete";
     wrapper.appendChild(delBtn);
 
     delBtn.addEventListener("click", function(){
-      for(let i = 0; i < Todo.tasks.length; i++) {
-        if(Todo.tasks[i].taskID === ID) {
-          Todo.tasks.splice(Todo.tasks.indexOf(Todo.tasks[i].taskID), 1);
+      Todo.tasks = Todo.tasks.filter(task => task.taskID !== parseInt(ID.textContent));
+      if(taskOne) {
+        content.textContent = "";
+        for(let i = 0; i < Todo.tasks.length; i++) {
+            if(inputSubject.value === "") {
+                Todo.tasks[i].title = "NoSubject";
+            } 
+            const note = document.createElement("div");
+            note.classList.add("task-item");
+  
+            const titleItem = document.createElement("div");
+            titleItem.classList.add("titleItem");
+            titleItem.textContent = `${Todo.tasks[i].title}`;
+            note.appendChild(titleItem);
+  
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("wrapper");
+  
+            const descriptionItem = document.createElement("div");
+            descriptionItem.classList.add("descriptionItem");
+            descriptionItem.textContent = `${Todo.tasks[i].description}`;
+            wrapper.appendChild(descriptionItem);
+  
+            const dateItem = document.createElement("div");
+            dateItem.classList.add("dateItem");
+            dateItem.textContent = `${Todo.tasks[i].date}`;
+            wrapper.appendChild(dateItem);
+  
+            const prioItem = document.createElement("div");
+            prioItem.classList.add("prioItem");
+            prioItem.textContent = `${Todo.tasks[i].priority}`;
+            wrapper.appendChild(prioItem);
+  
+            if(Todo.tasks[i].priority === "High") {
+                note.style.borderLeft = "5px solid red";
+            }
+            if(Todo.tasks[i].priority === "Medium") {
+                note.style.borderLeft = "5px solid yellow";
+            }
+            if(Todo.tasks[i].priority === "Low") {
+                note.style.borderLeft = "5px solid green";
+            }
+            const ID = document.createElement("div");
+            ID.textContent = Todo.tasks[i].taskID;
+            wrapper.appendChild(ID);
+            Todo.tasks[i].delBtn(wrapper, ID);
+            note.appendChild(wrapper);
+            taskOne.expandTask(note, wrapper);
+            content.appendChild(note);
         }
       }
-      console.log(Todo.tasks.length);
     })
   }
+  
 }
 
 //global query selectors
