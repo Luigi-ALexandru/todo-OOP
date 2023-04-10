@@ -31,8 +31,8 @@
 
 .dropdown {
     display: inline-block;
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
 }
 
 .dropdown-content {
@@ -85,6 +85,7 @@
     transform: translate(-50%, -50%);
     border: 1px solid black;
     padding: 1rem;
+    background-color: #fff;
 }
 
 input[type="text"] {
@@ -129,4 +130,34 @@ legend {
 
 .delBtn {
     margin: 1rem 1rem 0 1rem;
+    font-family: 'Roboto', sans-serif;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 0.3rem;
+    margin: 0.5rem;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.delBtn:hover {
+    transform: scale(110%);
+} 
+
+hr {
+    margin-bottom: 0.5rem;
+}
+
+.createButton,
+.closeButton {
+    font-family: 'Roboto', sans-serif;
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 0.3rem;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.createButton:hover,
+.closeButton:hover {
+    transform: scale(110%);
 }

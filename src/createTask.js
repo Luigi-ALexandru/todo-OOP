@@ -1,7 +1,7 @@
 export let taskOne = null;
+
 function createTask(inputSubject, inputDescription, inputPriority, inputPriority2, inputPriority3, Todo, content, create, dueDate, close, popUp, inputDate) {
   create.addEventListener("click", function(){
-    console.log(Todo.tasks.length);
       const title = inputSubject.value;
       const description = inputDescription.value;
       const date = dueDate.textContent + " " + inputDate.value;
@@ -19,7 +19,7 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
       content.textContent = "";
       for(let i = 0; i < Todo.tasks.length; i++) {
           if(inputSubject.value === "") {
-              Todo.tasks[i].title = "NoSubject";
+              Todo.tasks[Todo.tasks.length -1].title = "NoSubject";
           } 
           const note = document.createElement("div");
           note.classList.add("task-item");
@@ -29,6 +29,9 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
           titleItem.textContent = `${Todo.tasks[i].title}`;
           note.appendChild(titleItem);
 
+          const hr = document.createElement("hr");
+          note.appendChild(hr);
+
           const wrapper = document.createElement("div");
           wrapper.classList.add("wrapper");
 
@@ -37,15 +40,24 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
           descriptionItem.textContent = `${Todo.tasks[i].description}`;
           wrapper.appendChild(descriptionItem);
 
+          const hr2 = document.createElement("hr");
+          wrapper.appendChild(hr2);
+
           const dateItem = document.createElement("div");
           dateItem.classList.add("dateItem");
           dateItem.textContent = `${Todo.tasks[i].date}`;
           wrapper.appendChild(dateItem);
 
+          const hr3 = document.createElement("hr");
+          wrapper.appendChild(hr3);
+
           const prioItem = document.createElement("div");
           prioItem.classList.add("prioItem");
           prioItem.textContent = `${Todo.tasks[i].priority}`;
           wrapper.appendChild(prioItem);
+
+          const hr4 = document.createElement("hr");
+          wrapper.appendChild(hr4);
 
           if(Todo.tasks[i].priority === "High") {
               note.style.borderLeft = "5px solid red";
@@ -59,10 +71,11 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
           const ID = document.createElement("div");
           ID.textContent = Todo.tasks[i].taskID;
           wrapper.appendChild(ID);
-          Todo.tasks[i].delBtn(wrapper, ID, inputSubject);
+          Todo.tasks[i].delBtn(wrapper, ID);
           note.appendChild(wrapper);
           taskOne.expandTask(note, wrapper);
           content.appendChild(note);
+          Todo.orderTasks();
       }
       popUp.style.display = "none";
   })
@@ -82,6 +95,9 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
           titleItem.textContent = `${Todo.tasks[i].title}`;
           note.appendChild(titleItem);
 
+          const hr = document.createElement("hr");
+          note.appendChild(hr);
+
           const wrapper = document.createElement("div");
           wrapper.classList.add("wrapper");
 
@@ -90,15 +106,24 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
           descriptionItem.textContent = `${Todo.tasks[i].description}`;
           wrapper.appendChild(descriptionItem);
 
+          const hr2 = document.createElement("hr");
+          wrapper.appendChild(hr2);
+
           const dateItem = document.createElement("div");
           dateItem.classList.add("dateItem");
           dateItem.textContent = `${Todo.tasks[i].date}`;
           wrapper.appendChild(dateItem);
 
+          const hr3 = document.createElement("hr");
+          wrapper.appendChild(hr3);
+
           const prioItem = document.createElement("div");
           prioItem.classList.add("prioItem");
           prioItem.textContent = `${Todo.tasks[i].priority}`;
           wrapper.appendChild(prioItem);
+
+          const hr4 = document.createElement("hr");
+          wrapper.appendChild(hr4);
 
           if(Todo.tasks[i].priority === "High") {
               note.style.borderLeft = "5px solid red";
@@ -112,10 +137,11 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
           const ID = document.createElement("div");
           ID.textContent = Todo.tasks[i].taskID;
           wrapper.appendChild(ID);
-          Todo.tasks[i].delBtn(wrapper, ID, inputSubject);
+          Todo.tasks[i].delBtn(wrapper, ID);
           note.appendChild(wrapper);
           taskOne.expandTask(note, wrapper);
           content.appendChild(note);
+          Todo.orderTasks();
       }
     }
     popUp.style.display = "none";

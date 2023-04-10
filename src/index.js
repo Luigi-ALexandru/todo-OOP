@@ -1,6 +1,6 @@
 import './styles.css';
 import { popUpx } from './popup.js'
-import { createTask, taskOne } from './createTask.js';
+import { createTask } from './createTask.js';
 
 //declare class
 class Todo {
@@ -15,6 +15,54 @@ class Todo {
     this.taskID = Todo.taskIDCounter;
     Todo.taskIDCounter++;
     this.addTask();
+  }
+
+  static renderTasks() {
+    content.textContent = "";
+    Todo.tasks.forEach((task) => {
+      const note = document.createElement("div");
+      note.classList.add("task-item");
+
+      const titleItem = document.createElement("div");
+      titleItem.classList.add("titleItem");
+      titleItem.textContent = task.title;
+      note.appendChild(titleItem);
+
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("wrapper");
+
+      const descriptionItem = document.createElement("div");
+      descriptionItem.classList.add("descriptionItem");
+      descriptionItem.textContent = task.description;
+      wrapper.appendChild(descriptionItem);
+
+      const dateItem = document.createElement("div");
+      dateItem.classList.add("dateItem");
+      dateItem.textContent = task.date;
+      wrapper.appendChild(dateItem);
+
+      const prioItem = document.createElement("div");
+      prioItem.classList.add("prioItem");
+      prioItem.textContent = task.priority;
+      wrapper.appendChild(prioItem);
+
+      if (task.priority === "High") {
+        note.style.borderLeft = "5px solid red";
+      }
+      if (task.priority === "Medium") {
+        note.style.borderLeft = "5px solid yellow";
+      }
+      if (task.priority === "Low") {
+        note.style.borderLeft = "5px solid green";
+      }
+      const ID = document.createElement("div");
+      ID.textContent = task.taskID;
+      wrapper.appendChild(ID);
+      task.delBtn(wrapper, ID);
+      note.appendChild(wrapper);
+      task.expandTask(note, wrapper);
+      content.appendChild(note);
+    });
   }
 
   expandTask(note, wrapper) {
@@ -42,7 +90,7 @@ class Todo {
     Todo.tasks.push(this);
   }
 
-  delBtn(wrapper, ID, inputSubject) {
+  delBtn(wrapper, ID) {
     if(Todo.tasks.length === 0) {
       content.textContent = "";
     }
@@ -51,65 +99,24 @@ class Todo {
     delBtn.textContent = "Delete";
     wrapper.appendChild(delBtn);
 
-    delBtn.addEventListener("click", function(){
+    delBtn.addEventListener("click", () => {
       Todo.tasks = Todo.tasks.filter(task => task.taskID !== parseInt(ID.textContent));
-      if(taskOne) {
-        content.textContent = "";
-        for(let i = 0; i < Todo.tasks.length; i++) {
-            if(inputSubject.value === "") {
-                Todo.tasks[i].title = "NoSubject";
-            } 
-            const note = document.createElement("div");
-            note.classList.add("task-item");
-  
-            const titleItem = document.createElement("div");
-            titleItem.classList.add("titleItem");
-            titleItem.textContent = `${Todo.tasks[i].title}`;
-            note.appendChild(titleItem);
-  
-            const wrapper = document.createElement("div");
-            wrapper.classList.add("wrapper");
-  
-            const descriptionItem = document.createElement("div");
-            descriptionItem.classList.add("descriptionItem");
-            descriptionItem.textContent = `${Todo.tasks[i].description}`;
-            wrapper.appendChild(descriptionItem);
-  
-            const dateItem = document.createElement("div");
-            dateItem.classList.add("dateItem");
-            dateItem.textContent = `${Todo.tasks[i].date}`;
-            wrapper.appendChild(dateItem);
-  
-            const prioItem = document.createElement("div");
-            prioItem.classList.add("prioItem");
-            prioItem.textContent = `${Todo.tasks[i].priority}`;
-            wrapper.appendChild(prioItem);
-  
-            if(Todo.tasks[i].priority === "High") {
-                note.style.borderLeft = "5px solid red";
-            }
-            if(Todo.tasks[i].priority === "Medium") {
-                note.style.borderLeft = "5px solid yellow";
-            }
-            if(Todo.tasks[i].priority === "Low") {
-                note.style.borderLeft = "5px solid green";
-            }
-            const ID = document.createElement("div");
-            ID.textContent = Todo.tasks[i].taskID;
-            wrapper.appendChild(ID);
-            Todo.tasks[i].delBtn(wrapper, ID);
-            note.appendChild(wrapper);
-            taskOne.expandTask(note, wrapper);
-            content.appendChild(note);
-        }
-      }
-    })
+      Todo.renderTasks();
+    });
   }
-  
+
+  static orderTasks() {
+    reorderBtn.addEventListener("click", function(){
+    const order = { "High": 0, "Medium": 1, "Low": 2, "": 3 };
+    Todo.tasks.sort((a, b) => order[a.priority] - order[b.priority]);
+    Todo.renderTasks();
+  })
 }
 
+}
 //global query selectors
-const content = document.querySelector(".content");
+export const content = document.querySelector(".content");
+const reorderBtn = document.querySelector(".reorderBtn");
 
 //button add to array
 const addTaskBtn = document.querySelector(".addTaskBtn");
