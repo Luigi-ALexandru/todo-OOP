@@ -1,4 +1,5 @@
 export let taskOne = null;
+import { saveToLocalStorage } from "./saveToStorage";
 
 function createTask(inputSubject, inputDescription, inputPriority, inputPriority2, inputPriority3, Todo, content, create, dueDate, close, popUp, inputDate) {
   create.addEventListener("click", function(){
@@ -16,6 +17,7 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
           priority = "";
       }
       taskOne = new Todo(title, description, date, priority);
+      saveToLocalStorage(Todo);
       content.textContent = "";
       for(let i = 0; i < Todo.tasks.length; i++) {
           if(inputSubject.value === "") {
@@ -71,9 +73,9 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
           const ID = document.createElement("div");
           ID.textContent = Todo.tasks[i].taskID;
           wrapper.appendChild(ID);
-          Todo.tasks[i].delBtn(wrapper, ID);
+          Todo.prototype.delBtn.call(Todo.tasks[i], wrapper, ID);
           note.appendChild(wrapper);
-          taskOne.expandTask(note, wrapper);
+          Todo.expandTask(Todo.tasks[i], note, wrapper);
           content.appendChild(note);
           Todo.orderTasks();
       }
@@ -85,8 +87,8 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
       content.textContent = "";
       for(let i = 0; i < Todo.tasks.length; i++) {
           if(inputSubject.value === "") {
-              Todo.tasks[i].title = "NoSubject";
-          } 
+            Todo.tasks[Todo.tasks.length -1].title = "NoSubject";
+        } 
           const note = document.createElement("div");
           note.classList.add("task-item");
 
@@ -137,9 +139,9 @@ function createTask(inputSubject, inputDescription, inputPriority, inputPriority
           const ID = document.createElement("div");
           ID.textContent = Todo.tasks[i].taskID;
           wrapper.appendChild(ID);
-          Todo.tasks[i].delBtn(wrapper, ID);
+          Todo.prototype.delBtn.call(Todo.tasks[i], wrapper, ID);
           note.appendChild(wrapper);
-          taskOne.expandTask(note, wrapper);
+          Todo.expandTask(Todo.tasks[i], note, wrapper);
           content.appendChild(note);
           Todo.orderTasks();
       }

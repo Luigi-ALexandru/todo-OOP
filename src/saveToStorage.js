@@ -1,29 +1,35 @@
-//     function saveToLocalStorage(Todo) {
-//         for(let i = 0; i < Todo.tasks.length; i++) {
-//             localStorage.setItem(`tasks_${i}`, JSON.stringify(Todo.tasks[i]));
-//         }
-//     }
-  
-// function loadFromLocalStorage(Todo) {
-//     for(let i = 0; i < localStorage.length; i++) {
-//         Todo.tasks.push(JSON.parse(localStorage.getItem(`tasks_${i}`)));
-//     }
-// }
+function saveToLocalStorage(Todo) {
+    for(let i = 0; i < Todo.tasks.length; i++) {
+        localStorage.setItem(`tasks_${i}`, JSON.stringify(Todo.tasks[i]));
+    }
+}
 
-//   function deleteFromLocalStorage(Todo, taskID) {
-//     for(let i = 0; i < localStorage.length; i++) {
-//         const storageKey = `tasks_${i}`;
-//         const storedTask = JSON.parse(localStorage.getItem(storageKey));
-//         if(storedTask && storedTask.taskID === taskID) {
-//             localStorage.removeItem(storageKey);
-//         }
-//     }
-// }
+function loadFromLocalStorage(Todo) {
+    let maxTaskID = -1;
+    for (let i = 0; i < localStorage.length; i++) {
+      const storedTask = JSON.parse(localStorage.getItem(`tasks_${i}`));
+      if (storedTask) {
+        Todo.tasks.push(storedTask);
+        if (storedTask.taskID > maxTaskID) {
+          maxTaskID = storedTask.taskID;
+        }
+      }
+    }
+    Todo.taskIDCounter = maxTaskID + 1;
+  }
 
-// export {
-//     saveToLocalStorage,
-//     loadFromLocalStorage,
-//     deleteFromLocalStorage
-// }
+  function deleteFromLocalStorage(Todo, taskID) {
+    for(let i = 0; i < localStorage.length; i++) {
+        const storageKey = `tasks_${i}`;
+        const storedTask = JSON.parse(localStorage.getItem(storageKey));
+        if(storedTask && storedTask.taskID === taskID) {
+            localStorage.removeItem(storageKey);
+        }
+    }
+}
 
-//WHY IS THIS SO DIFFICUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUULT I CAN'T UNDERSTAND WHY WHY WHY WHY IT DOESNT WORK CODE IS SO CLEAN FRESH LOOKIN' IDK BRO...
+export {
+    saveToLocalStorage,
+    loadFromLocalStorage,
+    deleteFromLocalStorage
+}

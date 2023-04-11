@@ -1,7 +1,8 @@
 import './styles.css';
 import { popUpx } from './popup.js'
 import { createTask } from './createTask.js';
-
+import { loadFromLocalStorage, deleteFromLocalStorage } from './saveToStorage';
+import { taskOne } from './createTask.js';
 //declare class
 class Todo {
 
@@ -22,30 +23,30 @@ class Todo {
     Todo.tasks.forEach((task) => {
       const note = document.createElement("div");
       note.classList.add("task-item");
-
+  
       const titleItem = document.createElement("div");
       titleItem.classList.add("titleItem");
       titleItem.textContent = task.title;
       note.appendChild(titleItem);
-
+  
       const wrapper = document.createElement("div");
       wrapper.classList.add("wrapper");
-
+  
       const descriptionItem = document.createElement("div");
       descriptionItem.classList.add("descriptionItem");
       descriptionItem.textContent = task.description;
       wrapper.appendChild(descriptionItem);
-
+  
       const dateItem = document.createElement("div");
       dateItem.classList.add("dateItem");
       dateItem.textContent = task.date;
       wrapper.appendChild(dateItem);
-
+  
       const prioItem = document.createElement("div");
       prioItem.classList.add("prioItem");
       prioItem.textContent = task.priority;
       wrapper.appendChild(prioItem);
-
+  
       if (task.priority === "High") {
         note.style.borderLeft = "5px solid red";
       }
@@ -58,14 +59,17 @@ class Todo {
       const ID = document.createElement("div");
       ID.textContent = task.taskID;
       wrapper.appendChild(ID);
-      task.delBtn(wrapper, ID);
+      Todo.prototype.delBtn.call(task, wrapper, ID);
       note.appendChild(wrapper);
-      task.expandTask(note, wrapper);
+  
+      // Call expandTask for each task when rendering
+      Todo.expandTask(task, note, wrapper);
+  
       content.appendChild(note);
     });
   }
 
-  expandTask(note, wrapper) {
+  static expandTask(task, note, wrapper) {
       note.addEventListener("click", function(){
       note.style.position = "fixed";
       note.style.top = "50%";
@@ -100,6 +104,7 @@ class Todo {
     wrapper.appendChild(delBtn);
 
     delBtn.addEventListener("click", () => {
+      deleteFromLocalStorage(Todo, this.taskID);
       Todo.tasks = Todo.tasks.filter(task => task.taskID !== parseInt(ID.textContent));
       Todo.renderTasks();
     });
@@ -112,7 +117,6 @@ class Todo {
     Todo.renderTasks();
   })
 }
-
 }
 //global query selectors
 export const content = document.querySelector(".content");
@@ -124,3 +128,7 @@ addTaskBtn.addEventListener("click", function(){
   const { inputSubject, inputDescription, inputPriority, inputPriority2, inputPriority3, create, dueDate, close, popUp, inputDate } = popUpx(content);
   createTask(inputSubject, inputDescription, inputPriority, inputPriority2, inputPriority3, Todo, content, create, dueDate, close, popUp, inputDate)
 });
+
+loadFromLocalStorage(Todo);
+Todo.renderTasks();
+
